@@ -1,24 +1,33 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Practice typing, improve accuracy, and track your progress with TypoPrac.">
   <meta name="theme-color" content="#f7f9fc">
   <title>TypoPrac — Online Typing Practice</title>
+  <meta name="color-scheme" content="light dark">
   <link rel="stylesheet" href="css/styles.css">
+  <script>(function () { var t = null; try { t = localStorage.getItem("typoprac-theme") } catch (e) { } if (t !== "dark" && t !== "light") t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; document.documentElement.setAttribute("data-theme", t) })();</script>
   <script src="js/app.js" defer></script>
 </head>
+
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="nav-wrap">
-      <a class="brand" href="index.html" aria-label="TypoPrac home"><span class="brand-mark" aria-hidden="true"></span><span>typo<span class="brand-orange">prac.</span></span></a>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation menu"><span></span><span></span><span></span></button>
+      <a class="brand" href="index.html" aria-label="TypoPrac home"><span class="brand-mark"
+          aria-hidden="true"></span><span>typo<span class="brand-orange">prac.</span></span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"
+        aria-label="Open navigation menu"><span></span><span></span><span></span></button>
       <nav id="primary-nav" class="primary-nav" aria-label="Main navigation">
-        <a href="#practice">Practice</a><a href="#features">Features</a><a href="#analytics">Insights</a><a href="#leaderboard">Leaderboard</a><a href="#footer">About</a>
+        <a href="#practice">Practice</a><a href="#features">Features</a><a href="#analytics">Insights</a><a
+          href="#leaderboard">Leaderboard</a><a href="#streaks">Daily streak</a><a href="#footer">About</a>
       </nav>
-      <div class="nav-actions"><a class="button button-primary button-small" href="#practice">Get started free</a></div>
+      <div class="nav-actions"><button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false"
+          aria-label="Switch to dark mode"><span aria-hidden="true">☾</span></button><a
+          class="button button-primary button-small" href="#practice">Get started free</a></div>
     </div>
   </header>
 
@@ -31,34 +40,51 @@
       </div>
 
       <div class="typing-area">
-        <div class="stats-pills" aria-live="polite">
+        <div class="stats-pills"><span class="stat-pill"><i></i> TIME: <strong id="time-left">15s</strong></span>
           <span class="stat-pill"><i></i> WPM: <strong id="wpm">0</strong></span>
           <span class="stat-pill"><i></i> ACC: <strong id="accuracy">100%</strong></span>
         </div>
         <div class="quote-card" id="quote-card">
-          <p id="prompt-text" aria-label="Text to type">The rhythm of typing becomes a melody when your fingers find their flow.</p>
+          <p id="prompt-text" aria-label="Text to type">The rhythm of typing becomes a melody when your fingers find
+            their flow.</p>
           <label class="sr-only" for="typing-input">Type the displayed practice text here</label>
-          <textarea id="typing-input" rows="2" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Click here and start typing..." aria-describedby="typing-help"></textarea>
+          <textarea id="typing-input" rows="2" spellcheck="false" autocomplete="off" autocapitalize="off"
+            placeholder="Click here and start typing..." aria-describedby="typing-help"></textarea>
         </div>
-        <p class="typing-help" id="typing-help"><kbd>Tab</kbd> + start typing to begin. Your practice stays in this browser.</p>
+        <p class="typing-help" id="typing-help">Click the text and start typing. The timer begins with your first key.
+          Your practice stays in this browser.</p>
         <div class="typing-controls">
-          <button class="button button-primary" id="start-btn" type="button"><span aria-hidden="true">▶</span> Start practice</button>
+          <button class="button button-primary" id="start-btn" type="button"><span aria-hidden="true">▶</span> Start
+            practice</button>
           <button class="button button-outline" id="reset-btn" type="button">↻ Reset test</button>
           <button class="button button-outline" id="new-text-btn" type="button">＋ New passage</button>
+        </div>
+        <div class="result-card" id="result-card" hidden tabindex="-1" aria-labelledby="result-title">
+          <h2 id="result-title">Your result</h2>
+          <div class="result-grid">
+            <div><span class="mini-label">Speed</span><strong id="result-wpm">0</strong><small>WPM</small></div>
+            <div><span class="mini-label">Accuracy</span><strong id="result-acc">0%</strong></div>
+            <div><span class="mini-label">Characters</span><strong id="result-chars">0</strong></div>
+            <div><span class="mini-label">Best speed</span><strong id="result-best">0</strong><small>WPM</small></div>
+          </div>
+          <p id="result-note"></p>
+          <div class="result-actions"><button class="button button-primary" id="again-btn" type="button">Try
+              again</button><button class="button button-outline" id="next-btn" type="button">Next passage</button>
+          </div>
         </div>
         <p class="sr-only" id="practice-status" role="status" aria-live="polite">Ready to practice.</p>
       </div>
     </section>
 
     <section class="content-section section-shell" id="features">
-      <div class="section-title"><span class="eyebrow">Features</span><h2>Choose your practice mode.</h2></div>
-      <article class="sandbox-card feature-wide">
-        <div><span class="feature-icon" aria-hidden="true">⌨</span><h3>Typing Sandbox</h3><p>Practice at your own pace and focus on smooth, accurate keystrokes.</p></div>
-        <a class="text-link" href="#practice">Start learning <span aria-hidden="true">→</span></a>
-      </article>
+      <div class="section-title"><span class="eyebrow">Features</span>
+        <h2>Choose your practice mode.</h2>
+      </div>
       <div class="feature-grid">
         <article class="feature-card">
-          <span class="feature-icon" aria-hidden="true">◴</span><h3>Timed tests</h3><p>Choose a short session and see how your pace changes.</p>
+          <span class="feature-icon" aria-hidden="true">◴</span>
+          <h3>Timed tests</h3>
+          <p>Choose a short session and see how your pace changes.</p>
           <div class="choice-row" role="group" aria-label="Choose test duration">
             <button class="choice active" data-seconds="15" type="button" aria-pressed="true">15s</button>
             <button class="choice" data-seconds="30" type="button" aria-pressed="false">30s</button>
@@ -66,67 +92,171 @@
           </div>
         </article>
         <article class="feature-card">
-          <span class="feature-icon" aria-hidden="true">&lt;/&gt;</span><h3>Code snippets</h3><p>Practice common programming words and punctuation.</p>
+          <span class="feature-icon" aria-hidden="true">&lt;/&gt;</span>
+          <h3>Code snippets</h3>
+          <p>Practice common programming words and punctuation.</p>
           <div class="choice-row" role="group" aria-label="Choose code language">
-            <button class="choice code-choice active" data-code="React" type="button" aria-pressed="true">React</button>
+            <button class="choice code-choice" data-code="React" type="button" aria-pressed="false">React</button>
             <button class="choice code-choice" data-code="JS" type="button" aria-pressed="false">JS</button>
             <button class="choice code-choice" data-code="Python" type="button" aria-pressed="false">Python</button>
             <button class="choice code-choice" data-code="SQL" type="button" aria-pressed="false">SQL</button>
           </div>
         </article>
         <article class="feature-card">
-          <span class="feature-icon" aria-hidden="true">☷</span><h3>Custom drills</h3><p>Paste your own text to practise a lesson or paragraph.</p>
+          <span class="feature-icon" aria-hidden="true">☷</span>
+          <h3>Custom drills</h3>
+          <p>Paste your own text to practise a lesson or paragraph.</p>
           <label class="sr-only" for="custom-text">Custom practice text</label>
-          <input class="custom-input" id="custom-text" type="text" maxlength="240" placeholder="Enter text and press Enter">
+          <input class="custom-input" id="custom-text" type="text" maxlength="240"
+            placeholder="Enter text and press Enter">
           <button class="text-link custom-submit" id="custom-submit" type="button">Use this text →</button>
         </article>
       </div>
     </section>
 
     <section class="content-section section-shell" id="analytics">
-      <div class="section-title"><span class="eyebrow">Practice insights</span><h2>Trace your fingertips.</h2></div>
+      <div class="section-title"><span class="eyebrow">Practice insights</span>
+        <h2>Trace your fingertips.</h2>
+      </div>
       <div class="analytics-card">
-        <div class="analytics-head"><h3>Interactive keyboard</h3><div class="stats-pills"><span class="stat-pill"><i></i> WPM: <strong id="keyboard-wpm">0</strong></span><span class="stat-pill"><i></i> ACC: <strong id="keyboard-accuracy">100%</strong></span></div></div>
+        <div class="analytics-head">
+          <h3>Interactive keyboard</h3>
+          <div class="stats-pills"><span class="stat-pill"><i></i> WPM: <strong id="keyboard-wpm">0</strong></span><span
+              class="stat-pill"><i></i> ACC: <strong id="keyboard-accuracy">100%</strong></span></div>
+        </div>
         <div class="keyboard" aria-label="Illustration of a keyboard. The next expected key is highlighted.">
-          <div class="key-row"><span class="key">~</span><span class="key">1</span><span class="key">2</span><span class="key">3</span><span class="key">4</span><span class="key">5</span><span class="key">6</span><span class="key">7</span><span class="key">8</span><span class="key">9</span><span class="key">0</span><span class="key">-</span><span class="key">=</span><span class="key key-wide">Backspace</span></div>
-          <div class="key-row"><span class="key key-wide">Tab</span><span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span><span class="key">[</span><span class="key">]</span><span class="key key-wide">\\</span></div>
-          <div class="key-row"><span class="key key-wide">Caps</span><span class="key">A</span><span class="key">S</span><span class="key">D</span><span class="key">F</span><span class="key">G</span><span class="key">H</span><span class="key">J</span><span class="key">K</span><span class="key">L</span><span class="key">;</span><span class="key">'</span><span class="key key-wide">Enter</span></div>
-          <div class="key-row"><span class="key key-wide">Shift</span><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span><span class="key">,</span><span class="key">.</span><span class="key">/</span><span class="key key-wide">Shift</span></div>
-          <div class="key-row"><span class="key">Ctrl</span><span class="key">Win</span><span class="key">Alt</span><span class="key key-space">Space</span><span class="key">Alt</span><span class="key">Fn</span><span class="key">Ctrl</span></div>
+          <div class="key-row"><span class="key">~</span><span class="key">1</span><span class="key">2</span><span
+              class="key">3</span><span class="key">4</span><span class="key">5</span><span class="key">6</span><span
+              class="key">7</span><span class="key">8</span><span class="key">9</span><span class="key">0</span><span
+              class="key">-</span><span class="key">=</span><span class="key key-wide">Backspace</span></div>
+          <div class="key-row"><span class="key key-wide">Tab</span><span class="key">Q</span><span
+              class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span
+              class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span
+              class="key">P</span><span class="key">[</span><span class="key">]</span><span
+              class="key key-wide">\</span></div>
+          <div class="key-row"><span class="key key-wide">Caps</span><span class="key">A</span><span
+              class="key">S</span><span class="key">D</span><span class="key">F</span><span class="key">G</span><span
+              class="key">H</span><span class="key">J</span><span class="key">K</span><span class="key">L</span><span
+              class="key">;</span><span class="key">'</span><span class="key key-wide">Enter</span></div>
+          <div class="key-row"><span class="key key-wide">Shift</span><span class="key">Z</span><span
+              class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span
+              class="key">N</span><span class="key">M</span><span class="key">,</span><span class="key">.</span><span
+              class="key">/</span><span class="key key-wide">Shift</span></div>
+          <div class="key-row"><span class="key">Ctrl</span><span class="key">Win</span><span
+              class="key">Alt</span><span class="key key-space">Space</span><span class="key">Alt</span><span
+              class="key">Fn</span><span class="key">Ctrl</span></div>
         </div>
         <div class="analytics-bottom">
-          <div><span class="mini-label">WPM trend</span><div class="trend-line" aria-hidden="true"><span></span></div><strong id="trend-wpm">0 WPM</strong></div>
-          <div><span class="mini-label">Characters typed</span><strong class="big-number" id="char-count">0</strong></div>
-          <div><span class="mini-label">Session progress</span><div class="progress-track" role="progressbar" aria-label="Passage completion" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-track"><span id="progress-fill"></span></div><strong id="progress-label">0%</strong></div>
+          <div><span class="mini-label">Best speed</span><strong class="big-number" id="trend-wpm">0 WPM</strong></div>
+          <div><span class="mini-label">Characters typed</span><strong class="big-number" id="char-count">0</strong>
+          </div>
+          <div><span class="mini-label">Session progress</span>
+            <div class="progress-track" role="progressbar" aria-label="Passage completion" aria-valuemin="0"
+              aria-valuemax="100" aria-valuenow="0" id="progress-track"><span id="progress-fill"></span></div><strong
+              id="progress-label">0%</strong>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="content-section section-shell" id="leaderboard">
-      <div class="section-title"><span class="eyebrow">Practice examples</span><h2>Championship arena.</h2><p class="section-note">Illustrative sample scores only — not real users or verified rankings.</p></div>
+      <div class="section-title"><span class="eyebrow">Leaderboard</span>
+        <h2>Championship arena.</h2>
+        <p class="section-note">Sample rows are illustrative, not real users. Your own best score appears first.</p>
+      </div>
       <div class="leaderboard-list">
-        <article class="leader-row"><span class="rank">01</span><span class="avatar avatar-one" aria-hidden="true">A</span><div class="leader-name"><strong>Sample typist</strong><small>Practice example</small></div><div class="leader-stat"><small>WPM</small><strong>92</strong></div><div class="leader-stat"><small>Accuracy</small><strong>98%</strong></div><span class="medal" aria-hidden="true">★</span></article>
-        <article class="leader-row"><span class="rank">02</span><span class="avatar avatar-two" aria-hidden="true">B</span><div class="leader-name"><strong>Demo learner</strong><small>Practice example</small></div><div class="leader-stat"><small>WPM</small><strong>84</strong></div><div class="leader-stat"><small>Accuracy</small><strong>97%</strong></div><span class="medal" aria-hidden="true">◆</span></article>
-        <article class="leader-row"><span class="rank">03</span><span class="avatar avatar-three" aria-hidden="true">C</span><div class="leader-name"><strong>Example account</strong><small>Practice example</small></div><div class="leader-stat"><small>WPM</small><strong>76</strong></div><div class="leader-stat"><small>Accuracy</small><strong>96%</strong></div><span class="medal" aria-hidden="true">✦</span></article>
+        <article class="leader-row leader-you"><span class="rank" aria-hidden="true">★</span><span
+            class="avatar avatar-you" aria-hidden="true">Y</span>
+          <div class="leader-name"><strong>You</strong><small>Best in this browser</small></div>
+          <div class="leader-stat"><small>WPM</small><strong id="you-wpm">–</strong></div>
+          <div class="leader-stat"><small>Accuracy</small><strong id="you-acc">–</strong></div><span class="medal"
+            aria-hidden="true">●</span>
+        </article>
+        <article class="leader-row"><span class="rank">01</span><span class="avatar avatar-one"
+            aria-hidden="true">A</span>
+          <div class="leader-name"><strong>Sample typist</strong><small>Practice example</small></div>
+          <div class="leader-stat"><small>WPM</small><strong>92</strong></div>
+          <div class="leader-stat"><small>Accuracy</small><strong>98%</strong></div><span class="medal"
+            aria-hidden="true">★</span>
+        </article>
+        <article class="leader-row"><span class="rank">02</span><span class="avatar avatar-two"
+            aria-hidden="true">B</span>
+          <div class="leader-name"><strong>Demo learner</strong><small>Practice example</small></div>
+          <div class="leader-stat"><small>WPM</small><strong>84</strong></div>
+          <div class="leader-stat"><small>Accuracy</small><strong>97%</strong></div><span class="medal"
+            aria-hidden="true">◆</span>
+        </article>
+        <article class="leader-row"><span class="rank">03</span><span class="avatar avatar-three"
+            aria-hidden="true">C</span>
+          <div class="leader-name"><strong>Example account</strong><small>Practice example</small></div>
+          <div class="leader-stat"><small>WPM</small><strong>76</strong></div>
+          <div class="leader-stat"><small>Accuracy</small><strong>96%</strong></div><span class="medal"
+            aria-hidden="true">✦</span>
+        </article>
       </div>
     </section>
 
     <section class="content-section section-shell" id="streaks">
-      <div class="section-title"><span class="eyebrow">Daily practice</span><h2>Stay sharp, daily.</h2><p class="section-note">Your practice count is stored only in this browser.</p></div>
+      <div class="section-title"><span class="eyebrow">Daily practice</span>
+        <h2>Stay sharp, daily.</h2>
+        <p class="section-note">Your streak is stored only in this browser. Practise for at least 10 characters to count
+          a day.</p>
+      </div>
+      <p class="streak-summary" id="streak-summary" aria-live="polite">Practise today to start your streak.</p>
       <div class="streak-grid" id="streak-grid">
-        <div class="streak-day"><small>DAY 1</small><span>🔥</span><strong>Practice</strong></div><div class="streak-day"><small>DAY 2</small><span>🔥</span><strong>Practice</strong></div><div class="streak-day"><small>DAY 3</small><span>🔥</span><strong>Practice</strong></div><div class="streak-day"><small>DAY 4</small><span>🔥</span><strong>Practice</strong></div>
-        <div class="streak-day"><small>DAY 5</small><span>○</span><strong>Keep going</strong></div><div class="streak-day"><small>DAY 6</small><span>○</span><strong>Keep going</strong></div><div class="streak-day"><small>DAY 7</small><span>○</span><strong>Keep going</strong></div><div class="streak-day"><small>DAY 8</small><span>○</span><strong>Keep going</strong></div>
+        <div class="streak-day"><small>DAY 1</small><span>🔥</span><strong>Practice</strong></div>
+        <div class="streak-day"><small>DAY 2</small><span>🔥</span><strong>Practice</strong></div>
+        <div class="streak-day"><small>DAY 3</small><span>🔥</span><strong>Practice</strong></div>
+        <div class="streak-day"><small>DAY 4</small><span>🔥</span><strong>Practice</strong></div>
+        <div class="streak-day"><small>DAY 5</small><span>○</span><strong>Keep going</strong></div>
+        <div class="streak-day"><small>DAY 6</small><span>○</span><strong>Keep going</strong></div>
+        <div class="streak-day"><small>DAY 7</small><span>○</span><strong>Keep going</strong></div>
+        <div class="streak-day"><small>DAY 8</small><span>○</span><strong>Keep going</strong></div>
       </div>
       <div class="achievement-grid">
-        <article class="achievement"><strong>100+ words</strong><span>Keep practising to build consistency</span><b aria-hidden="true">▤</b></article>
-        <article class="achievement"><strong>Accuracy focus</strong><span>Work towards more precise typing</span><b aria-hidden="true">★</b></article>
-        <article class="achievement"><strong>Milestone badge</strong><span>Earn badges as you make progress</span><b aria-hidden="true">✦</b></article>
+        <article class="achievement" data-achievement="words"><strong>100+ words</strong><span>Type 100 correct words in
+            finished tests.</span><b aria-hidden="true">▤</b></article>
+        <article class="achievement" data-achievement="accuracy"><strong>Accuracy focus</strong><span>Finish a test at
+            95% accuracy or better.</span><b aria-hidden="true">★</b></article>
+        <article class="achievement" data-achievement="streak"><strong>3-day streak</strong><span>Practise three days in
+            a row.</span><b aria-hidden="true">✦</b></article>
       </div>
     </section>
 
-    <section class="cta-card section-shell"><h2>Unleash your true speed<span class="brand-orange">.</span></h2><h3>Start practising now.</h3><a class="button button-primary button-large" href="#practice">Get started free <span aria-hidden="true">→</span></a></section>
-    <section class="about-card section-shell"><h2>TYPOPRAC — ONLINE TYPING PRACTICE</h2><p>TypoPrac is a typing-practice interface for building speed and accuracy through short exercises. Practice results shown on this demo page are calculated in your browser. No account is required for the practice features in this starter version.</p><div class="footer-link-grid"><div><h3>Typing practice</h3><a href="#practice">Online typing practice</a><a href="#features">Timed tests</a><a href="#features">Custom drills</a><a href="#analytics">Typing insights</a></div><div><h3>Learning</h3><a href="#features">Typing lessons</a><a href="#features">Code snippets</a><a href="#streaks">Daily practice</a></div><div><h3>Policies</h3><a href="privacy.html">Privacy policy</a><a href="terms.html">Terms &amp; conditions</a><a href="cookies.html">Cookie policy</a><a href="refund.html">Refund policy</a></div><div><h3>Contact</h3><a href="mailto:REPLACE_WITH_SUPPORT_EMAIL">Support email (replace)</a><span class="business-placeholder">Business name and address: add verified details before launch.</span></div></div></section>
+    <section class="cta-card section-shell">
+      <h2>Unleash your true speed<span class="brand-orange">.</span></h2>
+      <h3>Start practising now.</h3><a class="button button-primary button-large" href="#practice">Get started free
+        <span aria-hidden="true">→</span></a>
+    </section>
+    <section class="about-card section-shell">
+      <h2>TYPOPRAC — ONLINE TYPING PRACTICE</h2>
+      <p>TypoPrac is a free typing-practice tool for building speed and accuracy through short exercises. Your results,
+        streak and settings are calculated and saved in your own browser. No account is required, and nothing you type
+        is sent to a server.</p>
+      <div class="footer-link-grid">
+        <div>
+          <h3>Typing practice</h3><a href="#practice">Online typing practice</a><a href="#features">Timed tests</a><a
+            href="#features">Custom drills</a><a href="#analytics">Typing insights</a>
+        </div>
+        <div>
+          <h3>Learning</h3><a href="#features">Typing lessons</a><a href="#features">Code snippets</a><a
+            href="#streaks">Daily practice</a>
+        </div>
+        <div>
+          <h3>Policies</h3><a href="privacy.html">Privacy policy</a><a href="terms.html">Terms &amp; conditions</a><a
+            href="cookies.html">Cookie policy</a><a href="refund.html">Refund policy</a>
+        </div>
+        <div>
+          <h3>Contact</h3><a href="mailto:REPLACE_WITH_SUPPORT_EMAIL">Support email (replace)</a><span
+            class="business-placeholder">Business name and address: add verified details before launch.</span>
+        </div>
+      </div>
+    </section>
   </main>
-  <footer class="site-footer" id="footer"><div class="footer-bottom"><span>© <span id="year"></span> TypoPrac. Replace with the registered business name.</span><a href="#main">Back to top ↑</a></div></footer>
+  <footer class="site-footer" id="footer">
+    <div class="footer-bottom"><span>© <span id="year"></span> TypoPrac. Replace with the registered business
+        name.</span><a href="#main">Back to top ↑</a></div>
+  </footer>
 </body>
+
 </html>
